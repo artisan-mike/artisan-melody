@@ -1,3 +1,9 @@
+import { Board } from '@/components/Main/Board';
+
 export default function Home() {
-    return <main>hello melody</main>;
+    return (
+        <main>
+            <Board />
+        </main>
+    );
 }
