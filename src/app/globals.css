@@ -1,26 +1,131 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+@theme {
+    --font-header: var(--font--chillax);
+    --font-primary: var(--font--chillax);
+
+    --text-*: initial;
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.375rem;
+    --text-3xl: 1.562rem;
+    --text-4xl: 1.75rem;
+    --text-5xl: 2rem;
+
+    --spacing-*: initial;
+    --spacing-0: 0;
+    --spacing-05: 0.125rem;
+    --spacing-1: 0.25rem;
+    --spacing-2: 0.5rem;
+    --spacing-3: 0.875rem;
+    --spacing-4: 1.25rem;
+    --spacing-5: 2.125rem;
+    --spacing-6: 3.375rem;
+    --spacing-7: 5.625rem;
+    --spacing-8: 9rem;
+    --spacing-9: 14.5rem;
+    --spacing-10: 23.625rem;
+    --spacing-11: 38.125rem;
+    --spacing-mobile: 40rem;
+    --spacing-tablette: 48rem;
+    --spacing-desktop: 120rem;
+
+    --container-*: initial;
+
+    --radius-*: initial;
+    --radius-0.5: var(--spacing-05);
+    --radius-1: var(--spacing-1);
+    --radius-2: var(--spacing-2);
+    --radius-3: var(--spacing-3);
+    --radius-4: var(--spacing-4);
+    --radius-5: var(--spacing-5);
+    --radius-6: var(--spacing-6);
+    --radius-7: var(--spacing-7);
+
+    --breakpoint-*: initial;
+    --breakpoint-tablette: 40rem;
+    --breakpoint-desktop: 48rem;
+    --breakpoint-xxl: 120rem;
+
+    --color-brand: var(--color-red-600);
+    --color-text-strong: var(--color-gray-900);
+    --color-text-weak: var(--color-gray-600);
+    --color-stroke-strong: var(--color-gray-500);
+    --color-stroke-weak: var(--color-gray-300);
+    --color-fill: var(--color-gray-100);
+    --color-background: var(--color-gray-50);
+    --color-info-fill: var(--color-blue-50);
+    --color-info-stroke: var(--color-blue-400);
+    --color-info-text: var(--color-blue-600);
+    --color-success-fill: var(--color-green-50);
+    --color-success-stroke: var(--color-green-400);
+    --color-success-text: var(--color-green-600);
+    --color-error-fill: var(--color-red-50);
+    --color-error-stroke: var(--color-red-400);
+    --color-error-text: var(--color-red-600);
+    --color-warning-fill: var(--color-amber-50);
+    --color-warning-stroke: var(--color-amber-400);
+    --color-warning-text: var(--color-amber-600);
+}
+
+.dark {
+    --color-brand: var(--color-red-600);
+    --color-text-strong: var(--color-gray-100);
+    --color-text-weak: var(--color-gray-300);
+    --color-stroke-strong: var(--color-gray-500);
+    --color-stroke-weak: var(--color-gray-800);
+    --color-fill: var(--color-gray-900);
+    --color-background: var(--color-gray-950);
+    --color-info-fill: oklch(0% 0 0 / 0);
+    --color-info-stroke: var(--color-blue-600);
+    --color-info-text: var(--color-blue-400);
+    --color-success-fill: oklch(0% 0 0 / 0);
+    --color-success-stroke: var(--color-green-600);
+    --color-success-text: var(--color-green-400);
+    --color-error-fill: oklch(0% 0 0 / 0);
+    --color-error-stroke: var(--color-red-600);
+    --color-error-text: var(--color-red-400);
+    --color-warning-fill: oklch(0% 0 0 / 0);
+    --color-warning-stroke: var(--color-amber-600);
+    --color-warning-text: var(--color-amber-400);
+}
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    font-size: 16px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+h1 {
+    font-size: var(--text-4xl);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+h2 {
+    font-size: var(--text-3xl);
+}
+
+h3 {
+    font-size: var(--text-2xl);
+}
+
+h4 {
+    font-size: var(--text-xl);
+}
+
+h5 {
+    font-size: var(--text-lg);
+}
+
+h6 {
+    font-size: var(--text-base);
 }
