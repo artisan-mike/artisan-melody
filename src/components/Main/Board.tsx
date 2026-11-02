@@ -16,10 +16,10 @@ export function Board() {
                 <li className="rounded-bl-5 rounded-br-1 z-10 h-9 w-1/9 border-b-8 border-gray-900 bg-gray-800"></li>
 
                 <ul className="flex w-7/9">
-                    {notes.map(({ type, pitch }) => (
+                    {notes.map(({ type, pitch, key }) => (
                         <Key
                             key={type + pitch}
-                            note={{ type, pitch }}
+                            note={{ type, pitch, key }}
                         />
                     ))}
                 </ul>

@@ -7,7 +7,13 @@
     - added project initial styles and font
     - created README and CHANGELOG docs
 
-# 0.1.0
+## 0.1.0
 
     - created the keyboard
     - added initial notes data
+
+## 0.2.0
+
+    - created app state store
+    - added the functionality to play a note when a key in the piano is ckicked
+    - added the functionality to play a note when a key in the keyboard is pressed
