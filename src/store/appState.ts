@@ -9,4 +9,5 @@ import { AppSate } from './types';
 export const appState = proxy<AppSate>({
     instrument: 'synth',
     pressedKeys: [],
+    octave: 4,
 });

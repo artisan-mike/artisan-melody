@@ -21,3 +21,9 @@
 ## 0.2.1
 
     - updated keybindings and styling
+
+## 0.3.0
+
+    - added the ability to change octave
+    - added button sharable component
+    - update the piano style

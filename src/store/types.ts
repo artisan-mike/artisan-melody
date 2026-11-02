@@ -13,4 +13,5 @@ export type Instrument = 'synth' | 'metalSynth';
 export interface AppSate {
     instrument: Instrument;
     pressedKeys: string[];
+    octave: number;
 }
