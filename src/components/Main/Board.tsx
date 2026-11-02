@@ -1,16 +1,20 @@
 import { notes } from '@/store/notes';
 
+import { InstrumentSelector } from './IntrumentSelctor';
 import { Key } from './Key';
 import { Octave } from './Octave';
 
 export function Board() {
     return (
         <section className="rounded-t-2 rounded-b-5 flex w-full flex-col bg-gray-800">
-            <h1 className="text-stroke-weak mt-3 mb-2 text-center">
+            <h1 className="text-stroke-weak rounded-3 mb-2 w-fit border-4 border-t-0 border-r-0 border-l-0 border-gray-900 pt-3 pr-5 pb-3 pl-4">
                 Artisan-Melody
             </h1>
 
-            <Octave />
+            <div className="flex justify-around">
+                <Octave />
+                <InstrumentSelector />
+            </div>
 
             <div className="relative mt-6 flex">
                 <div

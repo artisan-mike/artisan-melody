@@ -34,6 +34,9 @@ export function Key({
     // create an instrument on the first render and when
     // the instrument name state change
     useEffect(() => {
+        // clean up the previous instrument
+        if (instrument.current) instrument.current.dispose();
+        // create a new intrument
         instrument.current = useInstrument(instrumentName);
     }, [instrumentName]);
 
@@ -60,6 +63,8 @@ export function Key({
             stopNote();
         }
     });
+
+    console.log('key render');
 
     return (
         <li

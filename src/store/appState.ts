@@ -7,7 +7,7 @@ import { proxy } from 'valtio';
 import { AppSate } from './types';
 
 export const appState = proxy<AppSate>({
-    instrument: 'synth',
+    instrument: 'Synth',
     pressedKeys: [],
     octave: 4,
 });

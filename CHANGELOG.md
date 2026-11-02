@@ -27,3 +27,7 @@
     - added the ability to change octave
     - added button sharable component
     - update the piano style
+
+## 0.4.0
+
+    - added the ability to choose intruments

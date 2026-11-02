@@ -8,7 +8,7 @@ export interface Note {
 
 export type ToneJsInstrument = Synth | MetalSynth;
 
-export type Instrument = 'synth' | 'metalSynth';
+export type Instrument = 'Synth' | 'Membrane' | 'Metal-Synth';
 
 export interface AppSate {
     instrument: Instrument;

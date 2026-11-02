@@ -7,10 +7,13 @@ import { Instrument } from '@/store/types';
  */
 export function useInstrument(instrument?: Instrument) {
     switch (instrument) {
-        case 'synth':
+        case 'Synth':
             return new Tone.Synth().toDestination();
 
-        case 'metalSynth':
+        case 'Membrane':
+            return new Tone.MembraneSynth().toDestination();
+
+        case 'Metal-Synth':
             return new Tone.MetalSynth().toDestination();
 
         default:
