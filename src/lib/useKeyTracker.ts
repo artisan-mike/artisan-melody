@@ -9,6 +9,8 @@ import { appState } from '@/store/appState';
 export function useKeyTracker() {
     // push the pressed key in the app state pressed keys
     function handleKeyPress(ev: KeyboardEvent) {
+        console.log(ev.code);
+
         appState.pressedKeys.push(ev.code);
         console.log(appState.pressedKeys);
     }

@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from 'cn';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as Tone from 'tone';
 import { useSnapshot } from 'valtio';
 
@@ -21,6 +21,7 @@ export function Key({
     const buttonRef = useRef<HTMLButtonElement>(null);
     const { pressedKeys } = useSnapshot(appState);
     const { instrument: instrumentName } = useSnapshot(appState);
+    const [isThisKeyClicked, setIsThisKeyClicked] = useState(false);
 
     // this is checked on every render
     const isThisKeyPressed = !!pressedKeys.find(
@@ -38,6 +39,7 @@ export function Key({
 
     // play a note when the button is pressed
     async function handleButtonPress() {
+        setIsThisKeyClicked(true);
         if (!instrument.current) return;
         await Tone.start();
         instrument.current.triggerAttack(
@@ -48,6 +50,7 @@ export function Key({
 
     // stop the note when the button is released
     async function handleButtonRelease() {
+        setIsThisKeyClicked(false);
         if (!instrument.current) return;
         await Tone.start();
         instrument.current.triggerRelease(Tone.now());
@@ -82,14 +85,27 @@ export function Key({
                 onMouseUp={handleButtonRelease}
                 onMouseLeave={handleButtonRelease}
                 className={cn(
-                    'inline-block h-9  w-full bg-gray-200 rounded-b-2 border-gray-400 border-b-4 border-l-4 flex items-end justify-center pb-2 cursor-pointer select-none active:bg-yellow-300 active:border-yellow-400 ',
+                    'inline-block h-9  w-full bg-gray-200 rounded-b-2 border-gray-400 border-b-4 border-l-4  pb-4 justify-center cursor-pointer select-none flex items-end active:bg-yellow-300 active:border-yellow-400 relative active:text-text-weak ',
                     type === 'sharp' &&
-                        'bg-gray-800 h-8 relative text-stroke-weak z-10 border-gray-900 absolute w-[6vw] -translate-x-1/2 active:text-text-strong ',
-                    isThisKeyPressed && 'bg-violet-500',
-                    isThisKeyPressed && type === 'sharp' && 'bg-gray-900',
+                        'bg-gray-800 h-8 relative  z-10 border-gray-900 absolute w-[6vw] text-stroke-weak -translate-x-1/2 active:text-text-strong ',
+                    isThisKeyPressed && 'bg-yellow-300 border-yellow-400',
+                    isThisKeyPressed && type === 'sharp' && 'text-text-strong',
                 )}
             >
-                {type === 'natural' ? pitch : pitch + '#'}
+                <span
+                    className={cn(
+                        'text-stroke-strong absolute -top-5 left-1/2 -translate-x-1/2 font-semibold',
+                        (isThisKeyPressed || isThisKeyClicked) &&
+                            'text-yellow-300',
+                    )}
+                >
+                    {type === 'natural' ? pitch : pitch + '#'}
+                </span>
+                <span className="font-semibold">
+                    {type === 'natural'
+                        ? key.replace('Key', '')
+                        : key.replace('Digit', '')}
+                </span>
             </button>
         </li>
     );

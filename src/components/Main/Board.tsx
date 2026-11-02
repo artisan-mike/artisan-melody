@@ -5,7 +5,7 @@ import { Key } from './Key';
 export function Board() {
     return (
         <section className="rounded-t-2 rounded-b-5 b flex w-full flex-col bg-gray-800 text-center">
-            <h1 className="text-stroke-weak mt-3 mb-5">Artisan-Melody</h1>
+            <h1 className="text-stroke-weak mt-3 mb-6">Artisan-Melody</h1>
 
             <div className="relative flex">
                 <div

@@ -17,3 +17,7 @@
     - created app state store
     - added the functionality to play a note when a key in the piano is ckicked
     - added the functionality to play a note when a key in the keyboard is pressed
+
+## 0.2.1
+
+    - updated keybindings and styling
