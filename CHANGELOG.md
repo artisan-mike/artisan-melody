@@ -36,3 +36,7 @@
 
     - fixed the piano not working on touch screens
     - added aditional styling
+
+## 0.5.0
+
+    - added the to slide on the piano on desktop

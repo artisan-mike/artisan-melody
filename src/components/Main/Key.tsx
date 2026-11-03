@@ -20,29 +20,23 @@ export function Key({
 }: KeyProps) {
     const buttonRef = useRef<HTMLButtonElement>(null);
     const { pressedKeys } = useSnapshot(appState);
-    const { instrument: instrumentName } = useSnapshot(appState);
-    const { octave } = useSnapshot(appState);
-
+    const {
+        instrument: instrumentName,
+        octave,
+        isMousePressed,
+    } = useSnapshot(appState);
     // this is checked on every render
     const isThisKeyPressed = !!pressedKeys.find(
         (pressedKey) => pressedKey === key,
     );
-
     // contains the instrument that will be assigned later in the useEffect
     const instrument = useRef<ToneJsInstrument | null>(null);
 
-    // create an instrument on the first render and when
-    // the instrument name state change
-    useEffect(() => {
-        // clean up the previous instrument
-        if (instrument.current) instrument.current.dispose();
-        // create a new intrument
-        instrument.current = useInstrument(instrumentName);
-    }, [instrumentName]);
-
     async function playNote() {
         if (!instrument.current) return;
+        // start audio context
         await Tone.start();
+        // play the note
         instrument.current.triggerAttack(
             `${pitch}${type === 'sharp' ? '#' : ''}${octave}`,
             Tone.now(),
@@ -55,11 +49,25 @@ export function Key({
         instrument.current.triggerRelease(Tone.now());
     }
 
-    // play a note when a specific keyboard key is pressed in the app state
+    // create an instrument on the first render and when
+    // the instrument name state change
     useEffect(() => {
+        // clean up the previous instrument
+        if (instrument.current) {
+            instrument.current.dispose();
+        }
+
+        // create a new intrument
+        instrument.current = useInstrument(instrumentName);
+    }, [instrumentName]);
+
+    useEffect(() => {
+        // play a note when a specific keyboard key is pressed in the app state
         if (isThisKeyPressed) {
             playNote();
-        } else {
+        }
+        // stop note when the key and the mouse is not pressed
+        else if (!isThisKeyPressed && !isMousePressed) {
             stopNote();
         }
     });
@@ -71,19 +79,26 @@ export function Key({
                 type === 'sharp' && 'w-0',
                 className,
             )}
+            draggable={false}
             {...rest}
         >
             <button
                 ref={buttonRef}
-                onMouseDown={playNote}
-                onMouseUp={stopNote}
-                onMouseLeave={stopNote}
-                onTouchStartCapture={playNote}
-                onTouchEndCapture={stopNote}
-                onTouchCancel={stopNote}
 
+                onMouseDown={playNote}
+                onMouseLeave={stopNote}
+                onMouseEnter={() => {
+                    if (isMousePressed) {
+                        playNote();
+                    }
+                }}
+
+                onTouchStart={playNote}
+                onTouchEnd={stopNote}
+
+                draggable={false}
                 className={cn(
-                    'inline-block h-9  w-full bg-gray-200 rounded-b-2 border-gray-400 border-b-4 border-l-4  pb-4 justify-center cursor-pointer select-none flex items-end active:bg-yellow-300 active:border-yellow-400 relative active:text-text-weak group ',
+                    'inline-block h-9  w-full bg-gray-200 rounded-b-2 border-gray-400 border-b-4 border-l-4  pb-4 justify-center cursor-pointer select-none flex items-end active:bg-yellow-300 active:border-yellow-400 relative active:text-text-weak group',
                     type === 'sharp' &&
                         'bg-gray-800 h-8 relative z-10 border-gray-900 absolute w-[6vw] max-w-6 text-stroke-weak -translate-x-1/2 active:text-text-strong ',
                     isThisKeyPressed && 'bg-yellow-300 border-yellow-400',

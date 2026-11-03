@@ -14,4 +14,5 @@ export interface AppSate {
     instrument: Instrument;
     pressedKeys: string[];
     octave: number;
+    isMousePressed: boolean;
 }
