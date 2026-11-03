@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 
 import './globals.css';
+import { Footer } from '@/components/Footer';
 
 const chillax = localFont({
     src: '../../public/fonts/Chillax-Variable.ttf',
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
         >
             <body className="font-primary flex h-full flex-col bg-violet-200">
                 {children}
+                <Footer />
             </body>
         </html>
     );

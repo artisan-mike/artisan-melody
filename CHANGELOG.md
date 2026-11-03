@@ -49,3 +49,7 @@
 
     - added decorations to the keyboard
     - fixed keyboard playing note two times on touchscreens
+
+## 0.6.0
+
+    - added the footer
