@@ -44,3 +44,8 @@
 ## 0.5.1
 
     - fixed styling issue when a piano key is pressed
+
+## 0.5.2
+
+    - added decorations to the keyboard
+    - fixed keyboard playing note two times on touchscreens

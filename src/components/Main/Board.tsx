@@ -1,3 +1,5 @@
+import { MusicNoteIcon, MusicNotesIcon } from '@phosphor-icons/react';
+
 import { notes } from '@/store/notes';
 
 import { InstrumentSelector } from './IntrumentSelctor';
@@ -6,12 +8,26 @@ import { Octave } from './Octave';
 
 export function Board() {
     return (
-        <section className="rounded-t-2 rounded-b-5 max-w-tablette m-auto flex w-full flex-col bg-gray-800">
+        <section className="rounded-t-2 rounded-b-5 max-w-tablette relative m-auto flex w-full flex-col bg-gray-800">
             <h1 className="text-stroke-weak rounded-3 mb-2 w-fit border-4 border-t-0 border-r-0 border-l-0 border-gray-900 pt-3 pr-5 pb-3 pl-4">
                 Artisan-Melody
             </h1>
 
-            <div className="tablette:flex-row tablette:pl-0 flex flex-col items-start justify-around gap-4 pl-[calc(1/9*100%)]">
+            <div
+                aria-hidden
+                className="text-text-weak absolute top-0 left-0 h-full w-full text-5xl"
+            >
+                <MusicNoteIcon
+                    weight="fill"
+                    className="tablette:top-3 tablette:left-[85%] absolute top-8 left-[75%] rotate-8"
+                />
+                <MusicNotesIcon
+                    weight="fill"
+                    className="desktop:left-5 tablette:left-3 tablette:bottom-4 absolute bottom-[60%] left-[80%] z-20 -rotate-12"
+                />
+            </div>
+
+            <div className="tablette:flex-row tablette:pl-0 z-10 flex flex-col items-start justify-around gap-4 pl-[calc(1/9*100%)]">
                 <Octave />
                 <InstrumentSelector />
             </div>

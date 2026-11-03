@@ -95,7 +95,6 @@ export function Key({
                 }}
 
                 onTouchStart={async () => {
-                    await playNote();
                     setIsThisKeyPressed(true);
                 }}
                 onTouchEnd={async () => {
