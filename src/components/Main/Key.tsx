@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from 'cn';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as Tone from 'tone';
 import { useSnapshot } from 'valtio';
 
@@ -26,11 +26,12 @@ export function Key({
         isMousePressed,
     } = useSnapshot(appState);
     // this is checked on every render
-    const isThisKeyPressed = !!pressedKeys.find(
+    const isKeyboardKeyPressed = !!pressedKeys.find(
         (pressedKey) => pressedKey === key,
     );
     // contains the instrument that will be assigned later in the useEffect
     const instrument = useRef<ToneJsInstrument | null>(null);
+    const [isThisKeyPressed, setIsThisKeyPressed] = useState(false);
 
     async function playNote() {
         if (!instrument.current) return;
@@ -63,11 +64,11 @@ export function Key({
 
     useEffect(() => {
         // play a note when a specific keyboard key is pressed in the app state
-        if (isThisKeyPressed) {
+        if (isKeyboardKeyPressed) {
             playNote();
         }
         // stop note when the key and the mouse is not pressed
-        else if (!isThisKeyPressed && !isMousePressed) {
+        else if (!isKeyboardKeyPressed && !isMousePressed) {
             stopNote();
         }
     });
@@ -93,22 +94,32 @@ export function Key({
                     }
                 }}
 
-                onTouchStart={playNote}
-                onTouchEnd={stopNote}
+                onTouchStart={async () => {
+                    await playNote();
+                    setIsThisKeyPressed(true);
+                }}
+                onTouchEnd={async () => {
+                    await stopNote();
+                    setIsThisKeyPressed(false);
+                }}
 
                 draggable={false}
                 className={cn(
-                    'inline-block h-9  w-full bg-gray-200 rounded-b-2 border-gray-400 border-b-4 border-l-4  pb-4 justify-center cursor-pointer select-none flex items-end active:bg-yellow-300 active:border-yellow-400 relative active:text-text-weak group',
+                    'inline-block h-9  w-full bg-gray-200 rounded-b-2 border-gray-400 border-b-4 border-l-4  pb-4 justify-center cursor-pointer select-none flex items-end relative active:text-text-weak group',
                     type === 'sharp' &&
                         'bg-gray-800 h-8 relative z-10 border-gray-900 absolute w-[6vw] max-w-6 text-stroke-weak -translate-x-1/2 active:text-text-strong ',
-                    isThisKeyPressed && 'bg-yellow-300 border-yellow-400',
-                    isThisKeyPressed && type === 'sharp' && 'text-text-strong',
+                    (isKeyboardKeyPressed || isThisKeyPressed) &&
+                        'bg-yellow-300 border-yellow-400 text-text-strong',
+                    isMousePressed &&
+                        'hover:bg-yellow-300 hover:border-yellow-400 hover:text-text-strong',
                 )}
             >
                 <span
                     className={cn(
-                        'text-stroke-strong absolute -top-5 left-1/2 -translate-x-1/2 font-semibold group-active:text-yellow-300',
-                        isThisKeyPressed && 'text-yellow-300',
+                        'text-stroke-strong absolute -top-5 left-1/2 -translate-x-1/2 font-semibold ',
+                        (isKeyboardKeyPressed || isThisKeyPressed) &&
+                            'text-yellow-300',
+                        isMousePressed && 'group-hover:text-yellow-300',
                     )}
                 >
                     {type === 'natural' ? pitch : pitch + '#'}

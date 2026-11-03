@@ -40,3 +40,7 @@
 ## 0.5.0
 
     - added the to slide on the piano on desktop
+
+## 0.5.1
+
+    - fixed styling issue when a piano key is pressed
