@@ -6,12 +6,12 @@ import { Octave } from './Octave';
 
 export function Board() {
     return (
-        <section className="rounded-t-2 rounded-b-5 flex w-full flex-col bg-gray-800">
+        <section className="rounded-t-2 rounded-b-5 max-w-tablette m-auto flex w-full flex-col bg-gray-800">
             <h1 className="text-stroke-weak rounded-3 mb-2 w-fit border-4 border-t-0 border-r-0 border-l-0 border-gray-900 pt-3 pr-5 pb-3 pl-4">
                 Artisan-Melody
             </h1>
 
-            <div className="flex justify-around">
+            <div className="tablette:flex-row tablette:pl-0 flex flex-col items-start justify-around gap-4 pl-[calc(1/9*100%)]">
                 <Octave />
                 <InstrumentSelector />
             </div>
@@ -22,7 +22,7 @@ export function Board() {
                     className="absolute top-0 left-0 z-10 h-1 w-full bg-gray-900"
                 ></div>
 
-                <li className="rounded-bl-5 rounded-br-1 z-10 h-9 w-1/9 border-b-8 border-gray-900 bg-gray-800"></li>
+                <div className="rounded-bl-5 rounded-br-1 z-10 h-9 w-1/9 border-b-8 border-gray-900 bg-gray-800"></div>
 
                 <ul className="flex w-7/9">
                     {notes.map(({ type, pitch, key }) => (

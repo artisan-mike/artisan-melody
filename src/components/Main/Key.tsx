@@ -64,8 +64,6 @@ export function Key({
         }
     });
 
-    console.log('key render');
-
     return (
         <li
             className={cn(
@@ -80,10 +78,14 @@ export function Key({
                 onMouseDown={playNote}
                 onMouseUp={stopNote}
                 onMouseLeave={stopNote}
+                onTouchStartCapture={playNote}
+                onTouchEndCapture={stopNote}
+                onTouchCancel={stopNote}
+
                 className={cn(
                     'inline-block h-9  w-full bg-gray-200 rounded-b-2 border-gray-400 border-b-4 border-l-4  pb-4 justify-center cursor-pointer select-none flex items-end active:bg-yellow-300 active:border-yellow-400 relative active:text-text-weak group ',
                     type === 'sharp' &&
-                        'bg-gray-800 h-8 relative z-10 border-gray-900 absolute w-[6vw] text-stroke-weak -translate-x-1/2 active:text-text-strong ',
+                        'bg-gray-800 h-8 relative z-10 border-gray-900 absolute w-[6vw] max-w-6 text-stroke-weak -translate-x-1/2 active:text-text-strong ',
                     isThisKeyPressed && 'bg-yellow-300 border-yellow-400',
                     isThisKeyPressed && type === 'sharp' && 'text-text-strong',
                 )}

@@ -19,7 +19,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
             lang="en"
             className={`h-full antialiased ${chillax.variable}`}
         >
-            <body className="font-primary flex h-full flex-col bg-violet-200 p-4">
+            <body className="font-primary flex h-full flex-col bg-violet-200">
                 {children}
             </body>
         </html>

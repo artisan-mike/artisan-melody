@@ -31,3 +31,8 @@
 ## 0.4.0
 
     - added the ability to choose intruments
+
+## 0.4.1
+
+    - fixed the piano not working on touch screens
+    - added aditional styling
