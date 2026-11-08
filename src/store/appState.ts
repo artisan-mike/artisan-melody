@@ -10,5 +10,5 @@ export const appState = proxy<AppSate>({
     instrument: 'Synth',
     pressedKeys: [],
     octave: 4,
-    isMousePressed: false,
+    pointerIds: new Set(),
 });

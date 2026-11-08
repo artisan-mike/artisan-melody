@@ -53,3 +53,7 @@
 ## 0.6.0
 
     - added the footer
+
+## 0.6.1
+
+    - used pointer event instead of a separate touch and mouse event

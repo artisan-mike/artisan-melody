@@ -20,11 +20,7 @@ export function Key({
 }: KeyProps) {
     const buttonRef = useRef<HTMLButtonElement>(null);
     const { pressedKeys } = useSnapshot(appState);
-    const {
-        instrument: instrumentName,
-        octave,
-        isMousePressed,
-    } = useSnapshot(appState);
+    const { instrument: instrumentName, octave } = useSnapshot(appState);
     // this is checked on every render
     const isKeyboardKeyPressed = !!pressedKeys.find(
         (pressedKey) => pressedKey === key,
@@ -32,9 +28,14 @@ export function Key({
     // contains the instrument that will be assigned later in the useEffect
     const instrument = useRef<ToneJsInstrument | null>(null);
     const [isThisKeyPressed, setIsThisKeyPressed] = useState(false);
+    // track if a note is playing
+    const isNotPlaying = useRef(false);
 
     async function playNote() {
         if (!instrument.current) return;
+        // if a note is already playing, do nothing
+        if (isNotPlaying.current) return;
+        isNotPlaying.current = true;
         // start audio context
         await Tone.start();
         // play the note
@@ -45,38 +46,58 @@ export function Key({
     }
 
     async function stopNote() {
+        isNotPlaying.current = false;
         if (!instrument.current) return;
         await Tone.start();
         instrument.current.triggerRelease(Tone.now());
     }
 
-    // create an instrument on the first render and when
-    // the instrument name state change
+    // code to run on the first render and when the instrument
+    // name change
     useEffect(() => {
         // clean up the previous instrument
-        if (instrument.current) {
-            instrument.current.dispose();
-        }
-
+        if (instrument.current) instrument.current.dispose();
         // create a new intrument
         instrument.current = useInstrument(instrumentName);
     }, [instrumentName]);
 
+    // // code to run on the first render and every time pointerIds changes
+    // useEffect(() => {
+    //     if (!buttonRef.current) return;
+    //     const button = buttonRef.current;
+    //     // stop a the when the finger leave the screen
+    //     document.addEventListener('pointerup', () => {
+    //         setIsThisKeyPressed(false);
+    //     });
+
+    //     document.addEventListener('pointermove', (ev) => {
+    //         // if the event is not a touch do nothing
+    //         if (ev.pointerType !== 'touch') return;
+    //         // track the element under the touch pointer
+    //         const underFinger = document.elementFromPoint(
+    //             ev.clientX,
+    //             ev.clientY,
+    //         );
+    //         // if the element under the touch pointer is not this
+    //         // or not in this button, stop the note
+    //         if (button.contains(underFinger) && pointerIds.size > 0) {
+    //             setIsThisKeyPressed(true);
+    //         }
+    //     });
+    // }, [pointerIds]);
+
+    // code that runs on every rerender
     useEffect(() => {
         // play a note when a specific keyboard key is pressed in the app state
-        if (isKeyboardKeyPressed) {
-            playNote();
-        }
+        if (isKeyboardKeyPressed || isThisKeyPressed) playNote();
         // stop note when the key and the mouse is not pressed
-        else if (!isKeyboardKeyPressed && !isMousePressed) {
-            stopNote();
-        }
+        else stopNote();
     });
 
     return (
         <li
             className={cn(
-                'relative w-full overflow-visible',
+                'relative w-full overflow-visible touch-none',
                 type === 'sharp' && 'w-0',
                 className,
             )}
@@ -86,31 +107,26 @@ export function Key({
             <button
                 ref={buttonRef}
 
-                onMouseDown={playNote}
-                onMouseLeave={stopNote}
-                onMouseEnter={() => {
-                    if (isMousePressed) {
-                        playNote();
-                    }
-                }}
-
-                onTouchStart={async () => {
+                onPointerDown={() => {
                     setIsThisKeyPressed(true);
                 }}
-                onTouchEnd={async () => {
-                    await stopNote();
+                onPointerUp={() => {
                     setIsThisKeyPressed(false);
+                }}
+                onPointerLeave={() => {
+                    setIsThisKeyPressed(false);
+                }}
+                onPointerEnter={(ev) => {
+                    if (ev.buttons === 1) setIsThisKeyPressed(true);
                 }}
 
                 draggable={false}
                 className={cn(
-                    'inline-block h-9  w-full bg-gray-200 rounded-b-2 border-gray-400 border-b-4 border-l-4  pb-4 justify-center cursor-pointer select-none flex items-end relative active:text-text-weak group',
+                    'inline-block h-9  w-full bg-gray-200 rounded-b-2 border-gray-400 border-b-4 border-l-4  pb-4 justify-center cursor-pointer select-none flex items-end relative active:text-text-weak group touch-none',
                     type === 'sharp' &&
                         'bg-gray-800 h-8 relative z-10 border-gray-900 absolute w-[6vw] max-w-6 text-stroke-weak -translate-x-1/2 active:text-text-strong ',
                     (isKeyboardKeyPressed || isThisKeyPressed) &&
                         'bg-yellow-300 border-yellow-400 text-text-strong',
-                    isMousePressed &&
-                        'hover:bg-yellow-300 hover:border-yellow-400 hover:text-text-strong',
                 )}
             >
                 <span
@@ -118,7 +134,6 @@ export function Key({
                         'text-stroke-strong absolute -top-5 left-1/2 -translate-x-1/2 font-semibold ',
                         (isKeyboardKeyPressed || isThisKeyPressed) &&
                             'text-yellow-300',
-                        isMousePressed && 'group-hover:text-yellow-300',
                     )}
                 >
                     {type === 'natural' ? pitch : pitch + '#'}
