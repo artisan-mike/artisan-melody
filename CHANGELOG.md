@@ -57,3 +57,8 @@
 ## 0.6.1
 
     - used pointer event instead of a separate touch and mouse event
+
+## 0.6.2
+
+    - removed the red background color in landscape mode
+    - added additional info to the footer.
