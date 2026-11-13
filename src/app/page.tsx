@@ -11,7 +11,7 @@ export default function Home() {
     usePointerTracker();
 
     return (
-        <main className="tablette:p-5 min-h-full overflow-scroll p-3">
+        <main className="tablette:p-5 min-h-screen p-3">
             <Board />
         </main>
     );

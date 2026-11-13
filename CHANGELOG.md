@@ -62,3 +62,7 @@
 
     - removed the red background color in landscape mode
     - added additional info to the footer.
+
+## 0.6.3
+
+    - made the body scrollable to remove the ugly scroll bars on the main component
